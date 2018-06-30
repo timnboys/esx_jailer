@@ -1,24 +1,56 @@
 -- jail command, obsolete
-TriggerEvent('es:addGroupCommand', 'jail', 'admin', function(source, args, user)
+-- TriggerEvent('es:addGroupCommand', 'jail', 'admin', function(source, args, user)
+	-- if args[1] and GetPlayerName(args[1]) ~= nil and args[2] then
+		-- TriggerEvent('esx_jailer:sendToJail', tonumber(args[1]), tonumber(args[2] * 60))
+	-- else
+		-- TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Invalid player ID or jail time!")
+	-- end
+-- end, function(source, args, user)
+	-- TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Insufficient Permissions.")
+-- end, {help = "Put a player in jail", params = {{name = "id", help = "target id"}, {name = "time", help = "jail time in minutes"}}})
+
+-- -- unjail
+-- TriggerEvent('es:addGroupCommand', 'unjail', 'admin', function(source, args, user)
+	-- if args[1] and GetPlayerName(args[1]) ~= nil then
+		-- TriggerEvent('esx_jailer:unjailQuest', tonumber(args[1]))
+	-- else
+		-- TriggerEvent('esx_jailer:unjailQuest', source)
+	-- end
+-- end, function(source, args, user)
+	-- TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Insufficient Permissions.")
+-- end, {help = "Unjail people from jail", params = {{name = "id", help = "target id"}}})
+
+-- jail command, cops only
+ESX = nil
+
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+
+TriggerEvent('es:addCommand', 'jail', function(source, args, user)
+	local xPlayer = ESX.GetPlayerFromId(args[1])
+	if xPlayer ~= nil and xPlayer.job ~= nil and xPlayer.job.name == 'police' then
 	if args[1] and GetPlayerName(args[1]) ~= nil and args[2] then
 		TriggerEvent('esx_jailer:sendToJail', tonumber(args[1]), tonumber(args[2] * 60))
 	else
 		TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Invalid player ID or jail time!")
 	end
-end, function(source, args, user)
+	else
 	TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Insufficient Permissions.")
-end, {help = "Put a player in jail", params = {{name = "id", help = "target id"}, {name = "time", help = "jail time in minutes"}}})
+	end
+end)
 
 -- unjail
-TriggerEvent('es:addGroupCommand', 'unjail', 'admin', function(source, args, user)
+TriggerEvent('es:addCommand', 'unjail', function(source, args, user)
+	local xPlayer = ESX.GetPlayerFromId(source)
+	if xPlayer ~= nil and xPlayer.job ~= nil and xPlayer.job.name == 'police' then
 	if args[1] and GetPlayerName(args[1]) ~= nil then
 		TriggerEvent('esx_jailer:unjailQuest', tonumber(args[1]))
 	else
 		TriggerEvent('esx_jailer:unjailQuest', source)
 	end
-end, function(source, args, user)
+else
 	TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Insufficient Permissions.")
-end, {help = "Unjail people from jail", params = {{name = "id", help = "target id"}}})
+	end
+end)	
 
 -- send to jail and register in database
 RegisterServerEvent('esx_jailer:sendToJail')
