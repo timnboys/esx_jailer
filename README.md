@@ -1,5 +1,5 @@
 # esx_jailer
-Let cops jail people! Custom built by the SCRP team and Modified by timnboys to rework the chat commands to only work if your job is `police` which works alongside esx_policejob. Doesn't matter anymore if you are an admin or not.
+Let cops jail people! Custom built by the SCRP team and Modified by timnboys to rework the chat commands to only work if your job is `police` in the esx database which works alongside esx_policejob. Doesn't matter anymore if you are an admin or not.
 
 # Installation
 1. Clone the project and add it to your resorces directory
