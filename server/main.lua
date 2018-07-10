@@ -1,7 +1,13 @@
 -- jail command, cops only
 ESX = nil
 
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+--ESX base
+Citizen.CreateThread(function()
+	while ESX == nil do
+		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+		Citizen.Wait(0)
+	end
+end)
 
 TriggerEvent('es:addCommand', 'jail', function(source, args, user)
 	local xPlayer = ESX.GetPlayerFromId(args[1])
