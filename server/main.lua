@@ -11,8 +11,8 @@ end)
 
 TriggerEvent('es:addCommand', 'jail', function(source, args, user)
 	local xPlayer = ESX.GetPlayerFromId(source)
-	print("player job name following this message")
-	print(xPlayer.job.name)
+	--print("player job name following this message")
+	--print(xPlayer.job.name)
 	if xPlayer ~= nil and xPlayer.job ~= nil and xPlayer.job.name == 'police' then
 	if args[1] and GetPlayerName(args[1]) ~= nil and args[2] then
 		TriggerEvent('esx_jailer:sendToJail', tonumber(args[1]), tonumber(args[2] * 60))
