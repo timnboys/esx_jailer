@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
 end)
 
 TriggerEvent('es:addCommand', 'jail', function(source, args, user)
-	local xPlayer = ESX.GetPlayerFromId(args[1])
+	local xPlayer = ESX.GetPlayerFromId(source)
 	if xPlayer ~= nil and xPlayer.job ~= nil and xPlayer.job.name == 'police' then
 	if args[1] and GetPlayerName(args[1]) ~= nil and args[2] then
 		TriggerEvent('esx_jailer:sendToJail', tonumber(args[1]), tonumber(args[2] * 60))
@@ -34,7 +34,7 @@ TriggerEvent('es:addCommand', 'unjail', function(source, args, user)
 else
 	TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Insufficient Permissions.")
 	end
-end)	
+end)
 
 -- send to jail and register in database
 RegisterServerEvent('esx_jailer:sendToJail')
